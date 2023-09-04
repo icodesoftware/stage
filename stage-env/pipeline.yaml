@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: my-pipeline
+spec:
+  tasks:
+    - name: task1
+      taskRef:
+        name: my-task1
+    - name: stage-env
+      taskRef:
+        name: my-stage-env-task
+      runAfter:
+        - task1
+    - name: task2
+      taskRef:
+        name: my-task2
+      runAfter:
+        - stage-env
+    - name: task3
+      taskRef:
+        name: my-task3
+      runAfter:
+        - task2
+        - stage-env
